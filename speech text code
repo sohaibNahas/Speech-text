@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> تحويل الصوت الى كلام</title>
+    <meta charset="UTF-8">
+
+</head>
+<style>
+    .hidden {
+        display: none;
+
+    }
+</style>
+<bodyid="full">
+    <div id="liveData" style="display: none;">
+        <p>تحميل.</p>
+    </div>
+
+    <script>
+
+
+
+        function evenHandler() {
+            // Check response is ready or not
+            if (xhr.readyState == 4 && xhr.status == 200) {
+
+
+                dataDiv = document.getElementById('liveData');
+                // Set current data text
+                dataDiv.innerHTML = xhr.responseText;
+                var xx = xhr.responseText;
+                //alert(xx);
+                if (xx == 1) {
+
+                    x.play();
+                    output.classList.add("hidden");
+                    var y = document.getElementById("audio").duration;
+                    y = (y * 1000);
+                    console.log(y);
+                    document.getElementById("demo").innerHTML = y;
+                    document.getElementById("p1").style.display = "block";
+                    document.getElementById("p2").style.display = "none";
+                    setTimeout(function () { document.getElementById("p1").style.display = "none"; document.getElementById("p2").style.display = "block"; }, y);
+                }
+
+                document.getElementById("sound").src = xhr.responseText;
+                // Update the live data every 1 sec
+                setTimeout( 10000);
+            }
+
+        }
+
+
+        function stt() {
+
+
+            // get output div reference
+            var output = document.getElementById("output");
+            // get action element reference
+            var action = document.getElementById("action");
+            // new speech recognition object
+            var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+            var recognition = new SpeechRecognition();
+            recognition.lang = "ar-AR"
+
+            // This runs when the speech recognition service starts
+            recognition.onstart = function () {
+                action.innerHTML = "<small>انا منصت اليك من فضلك تكلم</small>";
+            };
+
+            recognition.onspeechend = function () {
+                action.innerHTML = "<small>اوقف الاستماع</small>";
+                recognition.stop();
+
+
+
+            }
+
+
+            // start recognition
+            recognition.start();
+
+
+        }
+
+        function stt() {
+
+
+            // get output div reference
+            var output = document.getElementById("output");
+            // get action element reference
+            var action = document.getElementById("action");
+            // new speech recognition object
+            var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+            var recognition = new SpeechRecognition();
+            recognition.lang = "ar-AR"
+
+
+            // This runs when the speech recognition service starts
+            recognition.onstart = function () {
+                action.innerHTML = "<small>انا منصت اليك من فضلك تكلم</small>";
+            };
+
+            recognition.onspeechend = function () {
+                action.innerHTML = "<small>اوقف الاستماع</small>";
+                recognition.stop();
+
+
+
+            }
+
+            // This runs when the speech recognition service returns result
+            recognition.onresult = function (event) {
+                var transcript = event.results[0][0].transcript;
+                var confidence = event.results[0][0].confidence;
+                outputMe.innerHTML = "<b> " + transcript + "</b>";
+
+            };
+
+            // start recognition
+            recognition.start();
+
+
+        }
+
+        function playSound() {
+
+            var x = document.getElementById("audio");
+            x.play();
+            var y = document.getElementById("audio").duration;
+            y = y * 1000;
+            document.getElementById("demo").innerHTML = y;
+            document.getElementById("p1").style.display = "block";
+            document.getElementById("p2").style.display = "none";
+            setTimeout(function () { document.getElementById("p1").style.display = "none"; document.getElementById("p2").style.display = "block"; }, y);
+
+        }
+
+    </script>
+    <div align="center">
+        <br>
+
+        <button onclick="stt()">إبدآ</button>
+
+        <p><span id="action"></span></p>
+        <div id="outputMe" class="hide" style="font-size:50px"></div>
+
+        <div id="output" class="hide" style="font-size:50px"></div>
+
+    </div>
+    </body>
+
+</html>
